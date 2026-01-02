@@ -799,12 +799,12 @@ function generateStringValue(
 	profile: ColumnProfile,
 	columnName: string,
 ): string {
+	if (profile.enumValues && profile.enumValues.length > 0) {
+		return faker.helpers.arrayElement(profile.enumValues);
+	}
+
 	const finalize = (value: string): string =>
 		clampString(value, profile.maxLength);
-
-	if (profile.enumValues && profile.enumValues.length > 0) {
-		return finalize(faker.helpers.arrayElement(profile.enumValues));
-	}
 
 	const lowered = columnName.toLowerCase();
 	if (lowered.includes("name")) {
