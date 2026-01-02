@@ -1,0 +1,7 @@
+FROM postgres:18
+
+ENV POSTGRES_USER=local
+ENV POSTGRES_PASSWORD=localpass
+ENV POSTGRES_DB=migration_poc
+
+EXPOSE 5432

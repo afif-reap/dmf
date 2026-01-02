@@ -1,0 +1,29 @@
+;
+; Archive created at 2026-01-02 14:02:07 +08
+;     dbname: reapcard
+;     TOC Entries: 1056
+;     Compression: gzip
+;     Dump Version: 1.16-0
+;     Format: CUSTOM
+;     Integer: 4 bytes
+;     Offset: 8 bytes
+;     Dumped from database version: 15.12
+;     Dumped by pg_dump version: 18.1
+;
+;
+; Selected TOC Entries:
+;
+11; 2615 2200 SCHEMA - public reap_card_admin
+5; 3079 16414 EXTENSION - ltree 
+4; 3079 16416 EXTENSION - uuid-ossp 
+1150; 1247 28703 TYPE public budget_settlement_currency_enum reap_card_admin
+1156; 1247 118183 TYPE public business_account_currency_enum reap_card_admin
+1577; 1247 248681 TYPE public business_business_client_type_enum reap_card_admin
+1547; 1247 242000 TYPE public business_status_enum reap_card_admin
+1729; 1247 348842 TYPE public card_status_enum reap_card_admin
+1171; 1247 101358 TYPE public card_card_plan_enum reap_card_admin
+1174; 1247 17015 TYPE public card_card_type_enum reap_card_admin
+1177; 1247 136663 TYPE public card_freezereasontype_enum reap_card_admin
+239; 1259 17068 TABLE public budget reap_card_admin
+266; 1259 118187 TABLE public business reap_card_admin
+225; 1259 16434 TABLE public card reap_card_admin

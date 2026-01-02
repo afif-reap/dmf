@@ -1,0 +1,21 @@
+{
+	"name": "migration",
+	"module": "index.ts",
+	"type": "module",
+	"private": true,
+	"scripts": {
+		"generate": "bun run index.ts",
+		"build:bin": "bun build ./index.ts --compile --outfile ./dist/data-generator"
+	},
+	"dependencies": {
+		"@faker-js/faker": "^10.1.0"
+	},
+
+	"devDependencies": {
+		"@biomejs/biome": "2.3.10",
+		"@types/bun": "latest"
+	},
+	"peerDependencies": {
+		"typescript": "^5"
+	}
+}
