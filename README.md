@@ -20,14 +20,27 @@ Target a large card volume with a cap per business:
 bun run index.ts --cards 100000 --max-cards-per-business 1000 --out-dir ./out
 ```
 
+Example using the compiled binary in the same folder as the CSVs:
+
+```bash
+./data-generator \
+  --card-file "./card.csv" \
+  --business-file "./business.csv" \
+  --budget-file "./budget.csv" \
+  --enum-file "./enums.json" \
+  --cards 100000 \
+  --max-cards-per-business 1000 \
+  --out-dir "./out"
+```
+
 Notes:
 - The input CSVs in `from-db/` are required but gitignored; keep them locally (they are not committed).
 - `from-db/enums.json` is required and used by default for enum columns.
+- The 3 CSVs are exported from the original DB (via DBeaver export to CSV with header).
 - If `--cards` is set and `--business-rows` is not, business rows are derived as `ceil(cards / max-cards-per-business)`.
 - If `--budget-rows` is not set, budgets default to 2 per business (matching the default row ratios).
 - Budgets are generated with `parent_budget_id = NULL`, `root_budget_id = id` for a simple hierarchy.
 - Use `--progress-every` to see progress during long runs.
-- If you hit enum errors on load, increase `--sample-rows` so the enum values are inferred from a larger sample, or provide `--enum-file` to pin values.
 
 Outputs:
 - `out/card.csv`
@@ -121,11 +134,13 @@ Generate, load, and export a custom-format dump (replicable):
 ```bash
 bun run index.ts --cards 10000000 --max-cards-per-business 1000 --out-dir ./out
 psql "postgresql://local:localpass@localhost:5432/migration_poc" -f out/load.sql
+```
 
-docker exec -i migration-postgres pg_dump -U local -d migration_poc \
-  --data-only -Fc -f /tmp/fake_data.dump
+Run `pg_dump` locally (requires matching major version):
 
-docker cp migration-postgres:/tmp/fake_data.dump ./out/fake_data.dump
+```bash
+pg_dump "postgresql://local:localpass@localhost:5432/migration_poc" \
+  --data-only -Fc -f ./out/fake_data.dump
 ```
 
 Restore the generated dump:
