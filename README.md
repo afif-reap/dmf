@@ -1,23 +1,11 @@
 # migration
 
-Generate fake data for the `card`, `business`, and `budget` tables based on sample CSVs, and emit a `load.sql` file with COPY or \copy statements for fast imports.
+Generate fake data for the `xx`, `xx`, and `xx` tables based on sample CSVs, and emit a `load.sql` file with COPY.
 
 ## Install
 
 ```bash
 bun install
-```
-
-## Generate data
-
-```bash
-bun run index.ts --rows 5000 --out-dir ./out
-```
-
-Target a large card volume with a cap per business:
-
-```bash
-bun run index.ts --cards 100000 --max-cards-per-business 1000 --out-dir ./out
 ```
 
 Example using the compiled binary in the same folder as the CSVs:
@@ -31,6 +19,14 @@ Example using the compiled binary in the same folder as the CSVs:
   --cards 100000 \
   --max-cards-per-business 1000 \
   --out-dir "./out"
+```
+
+Example running via bun
+
+```bash
+bun run index.ts --cards 100000
+
+# to see option you can run: bun run index.ts --help
 ```
 
 Notes:
@@ -48,13 +44,8 @@ Outputs:
 - `out/budget.csv`
 - `out/load.sql`
 
-Default behavior uses client-side `\copy` (portable paths):
 
-```bash
-bun run index.ts
-```
-
-Export enum values from the local DB and save to `from-db/enums.json`:
+Optional: Export enum values from the local DB and save to `from-db/enums.json`:
 
 ```bash
 psql "postgresql://local:localpass@localhost:5432/migration_poc" -At -c "
@@ -81,8 +72,6 @@ Load into Postgres (psql on the host, connects to Docker):
 psql "postgresql://local:localpass@localhost:5432/migration_poc" -f out/load.sql
 ```
 
-If you prefer server-side `COPY`, mount the output directory into the container and use `--copy-mode copy` so Postgres can read the CSV paths.
-
 ## Build a binary
 
 ```bash
@@ -97,7 +86,7 @@ Run the binary:
 
 ## Local Postgres (Docker)
 
-Build the PG18 image:
+Build the image:
 
 ```bash
 docker build -t migration-postgres .
@@ -112,12 +101,6 @@ docker run --name migration-postgres \
   -e POSTGRES_DB=migration_poc \
   -p 5432:5432 \
   -d migration-postgres
-```
-
-Verify version:
-
-```bash
-psql "postgresql://local:localpass@localhost:5432/migration_poc" -c "SHOW server_version;"
 ```
 
 Enable required extensions:
